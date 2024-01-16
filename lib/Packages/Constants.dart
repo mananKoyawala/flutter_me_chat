@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_chat/Packages/Package_Export.dart';
+import 'package:me_chat/Utils/Services/NavigatorServices.dart';
 import 'CustomeTexts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -15,28 +16,28 @@ Color searchColor = const Color(0xff747b84);
 Color searchColor2 = const Color(0xffF4F6F9);
 
 class DP {
-  static dHeight(BuildContext context, int dp) {
-    return MediaQuery.of(context).size.height / dp;
+  static dHeight(int dp) {
+    return MediaQuery.of(ncontext).size.height / dp;
   }
 
-  static dWidth(BuildContext context, int dp) {
-    return MediaQuery.of(context).size.width / dp;
+  static dWidth(int dp) {
+    return MediaQuery.of(ncontext).size.width / dp;
   }
 
-  static infinity(BuildContext context) {
+  static infinity() {
     return double.infinity;
   }
 
-  static height(BuildContext context, double h) {
-    return MediaQuery.of(context).size.height * h;
+  static height(double h) {
+    return MediaQuery.of(ncontext).size.height * h;
   }
 
-  static width(BuildContext context, double w) {
-    return MediaQuery.of(context).size.height * w;
+  static width(double w) {
+    return MediaQuery.of(ncontext).size.height * w;
   }
 
-  static visibility(BuildContext context) {
-    return MediaQuery.of(context).viewInsets.bottom == 0;
+  static visibility() {
+    return MediaQuery.of(ncontext).viewInsets.bottom == 0;
   }
 }
 
@@ -45,20 +46,25 @@ unfocus() {
 }
 
 class Nav {
-  static push(BuildContext context, String routeName) {
-    return Navigator.pushNamed(context, routeName);
+  static push(String routeName) {
+    return Navigator.pushNamed(ncontext, routeName);
   }
 
-  static pushMaterial(BuildContext context, Widget widget) {
-    return Navigator.push(context, MaterialPageRoute(builder: (_) => widget));
+  static pushMaterial(Widget widget) {
+    return Navigator.push(ncontext, MaterialPageRoute(builder: (_) => widget));
   }
 
-  static pop(BuildContext context) {
-    Navigator.pop(context);
+  static pushMaterialReplacement(Widget widget) {
+    return Navigator.pushReplacement(
+        ncontext, MaterialPageRoute(builder: (_) => widget));
   }
 
-  static closeDrawer(BuildContext context) {
-    Scaffold.of(context).closeDrawer();
+  static pop() {
+    Navigator.pop(ncontext);
+  }
+
+  static closeDrawer() {
+    Scaffold.of(ncontext).closeDrawer();
   }
 }
 
@@ -90,8 +96,8 @@ radius(double d) {
   return BorderRadius.circular(d);
 }
 
-visible(BuildContext context) {
-  return MediaQuery.of(context).viewInsets.bottom == 0;
+visible() {
+  return MediaQuery.of(ncontext).viewInsets.bottom == 0;
 }
 
 toast(String msg) {
@@ -105,9 +111,9 @@ toast(String msg) {
       fontSize: 16.0);
 }
 
-Future<dynamic> dialogSuccess(BuildContext context) {
+Future<dynamic> dialogSuccess() {
   return showDialog(
-      context: context,
+      context: ncontext,
       builder: (ctx) => AlertDialog(
             shape: RoundedRectangleBorder(borderRadius: radius(10)),
             backgroundColor: white,
@@ -128,7 +134,7 @@ Future<dynamic> dialogSuccess(BuildContext context) {
               Center(
                   child: ButtonWithSimpleText(
                 onTap: () {
-                  Nav.pop(context);
+                  Nav.pop();
                 },
                 borderRadius: radius(10),
                 height: 45,
@@ -143,9 +149,9 @@ Future<dynamic> dialogSuccess(BuildContext context) {
           ));
 }
 
-Future<dynamic> dialogEdit(BuildContext context) {
+Future<dynamic> dialogEdit() {
   return showDialog(
-      context: context,
+      context: ncontext,
       builder: (ctx) => AlertDialog(
             shape: RoundedRectangleBorder(borderRadius: radius(10)),
             backgroundColor: white,
@@ -166,7 +172,7 @@ Future<dynamic> dialogEdit(BuildContext context) {
               Center(
                   child: ButtonWithSimpleText(
                 onTap: () {
-                  Nav.pop(context);
+                  Nav.pop();
                 },
                 borderRadius: radius(10),
                 height: 45,
@@ -203,12 +209,12 @@ MaterialColor createMaterialColor(Color color) {
   return MaterialColor(color.value, swatch);
 }
 
-Future<void> decisionDialog(BuildContext context, String title, String negative,
-    String positive, VoidCallback onPositive, VoidCallback onNegative) async {
+Future<void> decisionDialog(String title, String negative, String positive,
+    VoidCallback onPositive, VoidCallback onNegative) async {
   return showDialog<void>(
-    context: context,
+    context: ncontext,
     barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
+    builder: (ncontext) {
       return ClipRRect(
         borderRadius: radius(20),
         child: AlertDialog(

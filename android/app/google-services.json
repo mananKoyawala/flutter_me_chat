@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "249974292664",
+    "project_id": "me-chat-401e7",
+    "storage_bucket": "me-chat-401e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249974292664:android:fa52576143834405b6744d",
+        "android_client_info": {
+          "package_name": "com.example.me_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX75j_LA3eyhj7VkOdddi1tvgFiSu2vzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

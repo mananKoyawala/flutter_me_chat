@@ -27,7 +27,7 @@ class ButtonWithSimpleText extends StatelessWidget {
       borderRadius: radius(borderRadius ?? 10),
       child: Container(
         height: height ?? 50,
-        width: width ?? DP.infinity(context),
+        width: width ?? DP.infinity(),
         decoration: BoxDecoration(
             color: backgroundColor ?? black,
             borderRadius: radius(borderRadius ?? 10),

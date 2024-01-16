@@ -10,6 +10,8 @@ class ButtonWithPrefixIcon extends StatelessWidget {
     this.prefixIcon,
     this.title,
     required this.onTap,
+    this.extraSpaceInBetween,
+    this.specialText,
   });
 
   final double? height;
@@ -18,7 +20,9 @@ class ButtonWithPrefixIcon extends StatelessWidget {
   final double? borderRadius;
   final Widget? prefixIcon;
   final Widget? title;
+  final Widget? specialText;
   final VoidCallback onTap;
+  final double? extraSpaceInBetween;
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +41,16 @@ class ButtonWithPrefixIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             prefixIcon ?? const StaticIcon(),
-            sizeW10(),
+            extraSpaceInBetween == null
+                ? sizeW10()
+                : sizeW(extraSpaceInBetween!),
             title ??
                 TextFW500(
                   text: 'Add to Cart',
                   fontSize: 16,
                   textColor: white,
-                )
+                ),
+            specialText ?? const Text('')
           ],
         ),
       ),
