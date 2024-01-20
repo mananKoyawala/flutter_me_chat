@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:me_chat/Packages/Constants.dart';
 import 'package:me_chat/Screens/Auth/Login_Screen.dart';
+import 'package:me_chat/Screens/HomeScreen.dart';
+
+import 'API/Apis.dart';
 
 class SplashController extends GetxController {
   @override
@@ -12,10 +15,16 @@ class SplashController extends GetxController {
   }
 
   Future goTo() async {
-    await Future.delayed(const Duration(milliseconds: 1500));
+    await Future.delayed(const Duration(milliseconds: 1400));
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-    Nav.pushMaterialReplacement(const LoginScreen());
+
+    if (APIs.auth.currentUser != null) {
+      Nav.pushMaterialReplacement(HomeScreen());
+      return;
+    }
+
+    Nav.pushMaterialReplacement(LoginScreen());
   }
 }

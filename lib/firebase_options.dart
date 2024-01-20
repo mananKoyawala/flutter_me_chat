@@ -70,6 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '249974292664',
     projectId: 'me-chat-401e7',
     storageBucket: 'me-chat-401e7.appspot.com',
+    androidClientId: '249974292664-fp8r0siuka8u6ionmmlqac1j87pjkmut.apps.googleusercontent.com',
+    iosClientId: '249974292664-q0g67r6cds6ko1ss1mh2hrsklf44tm39.apps.googleusercontent.com',
     iosBundleId: 'com.example.meChat',
   );
 }

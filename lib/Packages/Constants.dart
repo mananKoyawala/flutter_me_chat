@@ -209,8 +209,8 @@ MaterialColor createMaterialColor(Color color) {
   return MaterialColor(color.value, swatch);
 }
 
-Future<void> decisionDialog(String title, String negative, String positive,
-    VoidCallback onPositive, VoidCallback onNegative) async {
+Future<void> decisionDialog(String title, String subtitle, String negative,
+    String positive, VoidCallback onNegative, VoidCallback onPositive) async {
   return showDialog<void>(
     context: ncontext,
     barrierDismissible: false, // user must tap button!
@@ -219,11 +219,11 @@ Future<void> decisionDialog(String title, String negative, String positive,
         borderRadius: radius(20),
         child: AlertDialog(
           // <-- SEE HERE
-          title: const Text('Log out'),
+          title: Text(title),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                Text(title),
+                Text(subtitle),
               ],
             ),
           ),

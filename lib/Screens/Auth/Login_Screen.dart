@@ -1,10 +1,13 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable, depend_on_referenced_packages
 import 'package:flutter/material.dart';
+import 'package:me_chat/Controller/Login_Controller.dart';
 import 'package:me_chat/Packages/Package_Export.dart';
-import 'package:me_chat/Screens/HomeScreen.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  LoginController ctr = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,8 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: ButtonWithPrefixIcon(
                 onTap: () {
-                  Nav.pushMaterialReplacement(HomeScreen());
+                  // Nav.pushMaterialReplacement(HomeScreen());
+                  ctr.handleGoogleBtnClick();
                 },
                 width: DP.infinity(),
                 borderRadius: 30,

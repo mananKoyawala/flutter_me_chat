@@ -31,6 +31,8 @@ class TheTextFeild extends StatelessWidget {
     this.borderRadius,
     this.fieldColor,
     required this.isborder,
+    this.onClickColor,
+    this.borderWidth,
   });
 
   double bottomInsets = MediaQuery.of(Get.context!).viewInsets.bottom;
@@ -59,6 +61,8 @@ class TheTextFeild extends StatelessWidget {
   final double? borderRadius;
   final Color? fieldColor;
   final bool isborder;
+  final Color? onClickColor;
+  final double? borderWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +126,12 @@ class TheTextFeild extends StatelessWidget {
                       BorderRadius.all(Radius.circular(borderRadius ?? 20))),
           focusedBorder: isborder == false
               ? UnderlineInputBorder(
-                  borderSide: BorderSide(color: fieldColor ?? black),
+                  borderSide: BorderSide(
+                      color: onClickColor ?? black, width: borderWidth ?? 1.5),
                 )
               : OutlineInputBorder(
-                  borderSide: BorderSide(color: fieldColor ?? black),
+                  borderSide: BorderSide(
+                      color: onClickColor ?? black, width: borderWidth ?? 1.5),
                   borderRadius:
                       BorderRadius.all(Radius.circular(borderRadius ?? 20))),
           border: isborder == false

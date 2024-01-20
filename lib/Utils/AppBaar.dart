@@ -18,3 +18,36 @@ class AppBaar extends StatelessWidget {
     );
   }
 }
+
+class CustomAppBar extends StatelessWidget {
+  const CustomAppBar({
+    super.key,
+    this.onTap2,
+    this.icon2,
+    required this.title,
+    this.icon1Color,
+  });
+
+  final VoidCallback? onTap2;
+  final Widget? icon2;
+  final String title;
+  final Color? icon1Color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButtons(
+            onTap: () {
+              Nav.pop();
+            },
+            icon: Icon(Icons.arrow_back, color: icon1Color ?? black)),
+        TextFW600(text: title, fontSize: 20, textcolor: black),
+        IconButtons(
+            onTap: onTap2 ?? () {},
+            icon: icon2 ?? Icon(Icons.arrow_back, color: white))
+      ],
+    );
+  }
+}
