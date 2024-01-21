@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:me_chat/Packages/Constants.dart';
 import 'package:me_chat/models/ChatUserModel.dart';
 
 class APIs {
@@ -53,5 +54,13 @@ class APIs {
         .collection('users')
         .where('id', isNotEqualTo: user.uid)
         .snapshots();
+  }
+
+  // Update user ingo
+  static Future<void> updateUserInfo() async {
+    await firestore.collection('users').doc(user.uid).update({
+      "name": meUser.name,
+      "about": meUser.about,
+    }).then((value) => toast('Your Information Updated'));
   }
 }

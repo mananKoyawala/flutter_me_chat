@@ -109,11 +109,11 @@ class TheTextFeild extends StatelessWidget {
                   borderRadius:
                       BorderRadius.all(Radius.circular(borderRadius ?? 20))),
           errorBorder: isborder == false
-              ? UnderlineInputBorder(
-                  borderSide: BorderSide(color: fieldColor ?? black),
+              ? const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
                 )
               : OutlineInputBorder(
-                  borderSide: BorderSide(color: fieldColor ?? black),
+                  borderSide: const BorderSide(color: Colors.red),
                   borderRadius:
                       BorderRadius.all(Radius.circular(borderRadius ?? 20))),
           focusedErrorBorder: isborder == false

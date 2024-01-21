@@ -5,6 +5,7 @@ import 'package:me_chat/Packages/Package_Export.dart';
 class ProfileController extends GetxController {
   final nameCtr = TextEditingController();
   final aboutCtr = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   changeNameCtr(String val) {
     nameCtr.text = val;
