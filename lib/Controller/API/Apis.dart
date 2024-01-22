@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_chat/Packages/Constants.dart';
 import 'package:me_chat/models/ChatUserModel.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class APIs {
   static FirebaseAuth auth = FirebaseAuth.instance;
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static FirebaseStorage storage = FirebaseStorage.instance;
 
   // Get current user
   static User get user => auth.currentUser!;
@@ -62,5 +66,24 @@ class APIs {
       "name": meUser.name,
       "about": meUser.about,
     }).then((value) => toast('Your Information Updated'));
+  }
+
+  // Store image files
+  static Future<void> uploadProfileImage(File file) async {
+    // # Getting file extension
+    final ext = file.path.split('.').last;
+    // toast("Extension $ext");
+
+    // # Storage file reference with path
+    final ref = storage.ref().child("profile/${user.uid}.$ext");
+
+    // # uploading images
+    await ref.putFile(file, SettableMetadata(contentType: 'image/$ext'));
+
+    // # Update image url in firestore
+    meUser.image = await ref.getDownloadURL();
+    await firestore.collection('users').doc(user.uid).update({
+      "image": meUser.image,
+    }).onError((error, stackTrace) => toast("Error in image Uploading!"));
   }
 }

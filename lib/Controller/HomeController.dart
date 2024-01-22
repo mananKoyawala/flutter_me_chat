@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-
-import 'API/Apis.dart';
+import 'package:flutter/material.dart';
 
 class HomeController extends GetxController {
-  @override
-  void onInit() {
-    super.onInit();
-    APIs.currentUserInfo();
+  var isSearching = false.obs;
+  final searchCtr = TextEditingController();
+
+  changeIsSearching() {
+    isSearching.toggle();
   }
 }

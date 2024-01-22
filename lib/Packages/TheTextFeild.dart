@@ -8,7 +8,7 @@ class TheTextFeild extends StatelessWidget {
   TheTextFeild({
     super.key,
     this.readOnly,
-    this.focus,
+    this.autofocus,
     this.textInputAction,
     this.border,
     this.controller,
@@ -38,7 +38,7 @@ class TheTextFeild extends StatelessWidget {
   double bottomInsets = MediaQuery.of(Get.context!).viewInsets.bottom;
 
   final bool? readOnly;
-  final bool? focus;
+  final bool? autofocus;
   final TextInputAction? textInputAction;
   final InputBorder? border;
   final TextEditingController? controller;
@@ -67,8 +67,9 @@ class TheTextFeild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
         readOnly: readOnly ?? false,
-        autofocus: focus ?? false,
+        autofocus: autofocus ?? false,
         textInputAction: textInputAction,
         showCursor: showCursor,
         controller: controller,

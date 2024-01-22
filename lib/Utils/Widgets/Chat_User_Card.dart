@@ -25,9 +25,9 @@ class ChatUserCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 5),
       child: ClickEffect(
         onTap: () {},
-        borderRadius: radius(10),
+        borderRadius: radius(0),
         child: Container(
-          padding: const EdgeInsets.only(bottom: 5),
+          padding: const EdgeInsets.only(bottom: 5, left: 16, right: 16),
           decoration: BoxDecoration(
               color: white,
               border: isLast

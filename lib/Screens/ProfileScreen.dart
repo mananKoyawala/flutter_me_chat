@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:me_chat/Controller/API/Apis.dart';
 import 'package:me_chat/Controller/Profile_Controller.dart';
@@ -10,6 +12,7 @@ import 'package:me_chat/models/ChatUserModel.dart';
 import 'package:get/get.dart';
 import '../Controller/Login_Controller.dart';
 import '../Utils/AppBaar.dart';
+import '../Utils/ImagePickerSheet.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key, required this.user});
@@ -46,17 +49,35 @@ class ProfileScreen extends StatelessWidget {
                       sizeH25(),
                       Stack(
                         children: [
-                          ClipRRect(
-                            borderRadius: radius(image),
-                            child: Container(
-                              height: image,
-                              width: image,
-                              decoration: BoxDecoration(
-                                color: imageBg,
-                                borderRadius: radius(image),
-                              ),
-                              child: NetworkImages(url: user.image),
-                            ),
+                          Obx(
+                            () => ctr.localImage.value != ""
+                                ? ClipRRect(
+                                    borderRadius: radius(image),
+                                    child: Container(
+                                      height: image,
+                                      width: image,
+                                      decoration: BoxDecoration(
+                                        color: imageBg,
+                                        borderRadius: radius(image),
+                                      ),
+                                      child: Image.file(
+                                        File(ctr.localImage.value),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: radius(image),
+                                    child: Container(
+                                      height: image,
+                                      width: image,
+                                      decoration: BoxDecoration(
+                                        color: imageBg,
+                                        borderRadius: radius(image),
+                                      ),
+                                      child: NetworkImages(url: user.image),
+                                    ),
+                                  ),
                           ),
                           Positioned(
                             right: 0,
@@ -65,7 +86,16 @@ class ProfileScreen extends StatelessWidget {
                               radius: 20,
                               backgroundColor: appColor,
                               child: IconButtons(
-                                onTap: () {},
+                                onTap: () {
+                                  showBottomSheets(ImagePickerSheet(
+                                    onImage: () async {
+                                      ctr.pickGalleryImage();
+                                    },
+                                    onCamera: () async {
+                                      ctr.pickCameraImage();
+                                    },
+                                  ));
+                                },
                                 icon: Icon(
                                   Icons.edit,
                                   color: white,

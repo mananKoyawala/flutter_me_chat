@@ -29,6 +29,8 @@ dev_dependencies:
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.14.0
   cached_network_image: ^3.3.1
+  image_picker: ^1.0.7
+  firebase_storage: ^11.6.0
 
 flutter_launcher_icons:
   android: 'launcher_icon'

@@ -242,3 +242,13 @@ Future<void> decisionDialog(String title, String subtitle, String negative,
     },
   );
 }
+
+showBottomSheets(Widget widget) {
+  showModalBottomSheet(
+      isScrollControlled: true,
+      enableDrag: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+      context: ncontext,
+      builder: (context) => widget);
+}

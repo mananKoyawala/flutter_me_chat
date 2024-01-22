@@ -17,8 +17,9 @@ class SplashController extends GetxController {
   Future goTo() async {
     await Future.delayed(const Duration(milliseconds: 1400));
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent));
 
     if (APIs.auth.currentUser != null) {
       Nav.pushMaterialReplacement(HomeScreen());
