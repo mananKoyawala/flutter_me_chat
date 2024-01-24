@@ -18,7 +18,7 @@ class TheTextFeild extends StatelessWidget {
     this.obsecureText,
     this.textInputType,
     this.onChanged,
-    this.maxLines,
+    this.maxLines = 1,
     this.maxLength,
     this.textStyle,
     this.hintStyle,
@@ -67,7 +67,6 @@ class TheTextFeild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
         readOnly: readOnly ?? false,
         autofocus: autofocus ?? false,
         textInputAction: textInputAction,
@@ -79,7 +78,7 @@ class TheTextFeild extends StatelessWidget {
         keyboardType: textInputType ?? TextInputType.text,
         scrollPadding: EdgeInsets.only(bottom: bottomInsets + 65.0),
         onChanged: onChanged,
-        maxLines: maxLines ?? 1,
+        maxLines: maxLines,
         style: textStyle ??
             TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: black),
         maxLength: maxLength,

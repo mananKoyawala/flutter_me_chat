@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 Color white = Colors.white;
 Color black = Colors.black;
+Color transparent = Colors.transparent;
 Color blackO_30 = const Color(0xFF000000).withOpacity(0.30);
 Color blackO_50 = const Color(0xFF000000).withOpacity(0.50);
 Color rippleColor = Colors.grey.shade500;

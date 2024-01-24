@@ -4,6 +4,7 @@ import 'package:me_chat/Controller/HomeController.dart';
 import 'package:me_chat/Packages/DropDownMenu.dart';
 import 'package:me_chat/Packages/Package_Export.dart';
 import 'package:me_chat/Screens/ProfileScreen.dart';
+import 'package:me_chat/Screens/ChatScreen.dart';
 import 'package:me_chat/Utils/Constants.dart';
 import 'package:me_chat/models/ChatUserModel.dart';
 import '../Controller/API/Apis.dart';
@@ -125,12 +126,20 @@ class HomeScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               if (index == list.length - 1) {
                                 return ChatUserCard(
+                                  onTap: () {
+                                    Nav.pushMaterial(
+                                        ChatScreen(user: list[index]));
+                                  },
                                   isLast: true,
                                   user: list[index],
                                 );
                               }
 
                               return ChatUserCard(
+                                onTap: () {
+                                  Nav.pushMaterial(
+                                      ChatScreen(user: list[index]));
+                                },
                                 isLast: false,
                                 user: list[index],
                               );

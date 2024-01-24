@@ -13,18 +13,20 @@ class ChatUserCard extends StatelessWidget {
     Key? key,
     required this.isLast,
     required this.user,
+    required this.onTap,
   }) : super(key: key);
 
   final bool isLast;
   final ChatUser user;
   var imageHeight = 55.0;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Margine(
       margin: const EdgeInsets.only(bottom: 5),
       child: ClickEffect(
-        onTap: () {},
+        onTap: onTap,
         borderRadius: radius(0),
         child: Container(
           padding: const EdgeInsets.only(bottom: 5, left: 16, right: 16),
@@ -63,7 +65,7 @@ class ChatUserCard extends StatelessWidget {
                     TextFW400(
                       text: user.about,
                       fontSize: 14,
-                      textcolor: Colors.grey.shade500,
+                      textcolor: textFeildColor,
                     ),
                   ],
                 ),

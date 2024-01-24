@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_chat/Packages/Constants.dart';
 import 'package:me_chat/models/ChatUserModel.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:me_chat/models/MessageModel.dart';
 
 class APIs {
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -85,5 +86,50 @@ class APIs {
     await firestore.collection('users').doc(user.uid).update({
       "image": meUser.image,
     }).onError((error, stackTrace) => toast("Error in image Uploading!"));
+  }
+
+  //********************************* Chat Screen Related APIS *********************************/
+
+  // chats (collection) --> conversation_id (docs) --> messages (collection) --> messages (doc)
+
+  // Useful to get conversation id (Compare the two id of sender and receiver and comapre the hash code)
+  static String getConversationID(String id) => user.uid.hashCode <= id.hashCode
+      ? '${user.uid}_$id'
+      : '${id}_${user.uid}';
+
+  // get all the messages from firestore
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages(
+      ChatUser user) {
+    return APIs.firestore
+        .collection('chats/${getConversationID(user.id)}/messages/')
+        .orderBy("sent", descending: true)
+        .snapshots();
+  }
+
+  // for sending messages
+  static Future<void> sendMessage(ChatUser chatUser, String msg) async {
+    // message sending time (also used as id)
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+
+    //message to send
+    final Message message = Message(
+        fromId: user.uid,
+        msg: msg,
+        toId: chatUser.id,
+        read: '',
+        type: Type.text,
+        sent: time);
+
+    final ref = firestore
+        .collection('chats/${getConversationID(chatUser.id)}/messages/');
+    await ref.doc(time).set(message.toJson());
+  }
+
+  // update message read status
+  static Future<void> updateMessageReadStatus(Message message) async {
+    firestore
+        .collection('chats/${getConversationID(message.fromId)}/messages/')
+        .doc(message.sent)
+        .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
   }
 }

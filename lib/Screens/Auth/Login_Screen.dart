@@ -15,43 +15,45 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Welcome to Me Chat'),
       ),
-      body: Stack(
-        children: [
-          Margine(
-            margin: const EdgeInsets.only(top: 150),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Image.asset(
-                'assets/icons/chatAppLogo2.png',
-                height: DP.dHeight(6),
-              ),
-            ),
-          ),
-          CP(
-            h: 16,
-            v: 30,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ButtonWithPrefixIcon(
-                onTap: () {
-                  // Nav.pushMaterialReplacement(HomeScreen());
-                  ctr.handleGoogleBtnClick();
-                },
-                width: DP.infinity(),
-                borderRadius: 30,
-                prefixIcon: Image.asset(
-                  'assets/icons/google.png',
-                  height: 20,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Margine(
+              margin: const EdgeInsets.only(top: 150),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  'assets/icons/chatAppLogo2.png',
+                  height: DP.dHeight(6),
                 ),
-                title: TextFW400(
-                    text: 'Sign With ', fontSize: 16, textcolor: white),
-                specialText:
-                    TextFW600(text: 'Google', fontSize: 16, textcolor: white),
-                extraSpaceInBetween: 20,
               ),
             ),
-          )
-        ],
+            CP(
+              h: 16,
+              v: 16,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ButtonWithPrefixIcon(
+                  onTap: () {
+                    // Nav.pushMaterialReplacement(HomeScreen());
+                    ctr.handleGoogleBtnClick();
+                  },
+                  width: DP.infinity(),
+                  borderRadius: 30,
+                  prefixIcon: Image.asset(
+                    'assets/icons/google.png',
+                    height: 20,
+                  ),
+                  title: TextFW400(
+                      text: 'Sign With ', fontSize: 16, textcolor: white),
+                  specialText:
+                      TextFW600(text: 'Google', fontSize: 16, textcolor: white),
+                  extraSpaceInBetween: 20,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
