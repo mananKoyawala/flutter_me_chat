@@ -2,11 +2,14 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:me_chat/Controller/API/Apis.dart';
+import 'package:me_chat/Controller/HomeController.dart';
 import 'package:me_chat/Screens/HomeScreen.dart';
 
 import '../Packages/Package_Export.dart';
 import '../Screens/Auth/Login_Screen.dart';
 import '../Utils/Dialogs.dart';
+
+HomeController ctr = Get.find<HomeController>();
 
 class LoginController extends GetxController {
   handleGoogleBtnClick() {

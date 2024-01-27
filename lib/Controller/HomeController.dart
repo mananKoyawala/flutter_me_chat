@@ -28,25 +28,28 @@ class HomeController extends GetxController with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    switch (state) {
-      case AppLifecycleState.resumed:
-        // App is in the foreground
-        // Add actions to handle when the app comes to the foreground
-        APIs.updateUserActiveStatus(true);
-        break;
-      case AppLifecycleState.inactive:
-      case AppLifecycleState.paused:
-        // App is in the background or transitioning to the background
-        // Add actions to handle when the app goes into the background
-        APIs.updateUserActiveStatus(false);
-        break;
-      case AppLifecycleState.detached:
-      // App is terminated
-      // APIs.updateUserActiveStatus(false);
-      // break;
-      case AppLifecycleState.hidden:
-      // APIs.updateUserActiveStatus(false);
-      // break;
+    if (APIs.auth.currentUser != null) {
+      //When user login or first time is not called
+      switch (state) {
+        case AppLifecycleState.resumed:
+          // App is in the foreground
+          // Add actions to handle when the app comes to the foreground
+          APIs.updateUserActiveStatus(true);
+          break;
+        case AppLifecycleState.inactive:
+        case AppLifecycleState.paused:
+          // App is in the background or transitioning to the background
+          // Add actions to handle when the app goes into the background
+          APIs.updateUserActiveStatus(false);
+          break;
+        case AppLifecycleState.detached:
+        // App is terminated
+        // APIs.updateUserActiveStatus(false);
+        // break;
+        case AppLifecycleState.hidden:
+        // APIs.updateUserActiveStatus(false);
+        // break;
+      }
     }
   }
 }
