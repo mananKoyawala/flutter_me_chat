@@ -88,6 +88,23 @@ class APIs {
     }).onError((error, stackTrace) => toast("Error in image Uploading!"));
   }
 
+  // For getting specific user information
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(
+      ChatUser user) {
+    return APIs.firestore
+        .collection('users')
+        .where('id', isEqualTo: user.id)
+        .snapshots();
+  }
+
+  // Update Current user active status
+  static Future<void> updateUserActiveStatus(bool isOnline) async {
+    firestore.collection('users').doc(user.uid).update({
+      'is_online': isOnline,
+      'last_active': DateTime.now().millisecondsSinceEpoch.toString(),
+    });
+  }
+
   //********************************* Chat Screen Related APIS *********************************/
 
   // chats (collection) --> conversation_id (docs) --> messages (collection) --> messages (doc)
@@ -107,7 +124,8 @@ class APIs {
   }
 
   // for sending messages
-  static Future<void> sendMessage(ChatUser chatUser, String msg) async {
+  static Future<void> sendMessage(
+      ChatUser chatUser, String msg, Type type) async {
     // message sending time (also used as id)
     final time = DateTime.now().millisecondsSinceEpoch.toString();
 
@@ -117,7 +135,7 @@ class APIs {
         msg: msg,
         toId: chatUser.id,
         read: '',
-        type: Type.text,
+        type: type,
         sent: time);
 
     final ref = firestore
@@ -131,5 +149,32 @@ class APIs {
         .collection('chats/${getConversationID(message.fromId)}/messages/')
         .doc(message.sent)
         .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
+  }
+
+  // Get user last message
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(
+      ChatUser user) {
+    return firestore
+        .collection('chats/${getConversationID(user.id)}/messages/')
+        .orderBy('sent', descending: true)
+        .limit(1)
+        .snapshots();
+  }
+
+  // Send Chat image url
+  static Future<void> sendChatImage(ChatUser chatUser, File file) async {
+    final ext = file.path.split('.').last;
+    // toast("Extension $ext");
+
+    // # Storage file reference with path
+    final ref = storage.ref().child(
+        "images/${getConversationID(chatUser.id)}/${DateTime.now().millisecondsSinceEpoch}.$ext");
+
+    // # uploading images
+    await ref.putFile(file, SettableMetadata(contentType: 'image/$ext'));
+
+    // # Update image url in firestore
+    final imageUrl = await ref.getDownloadURL();
+    await APIs.sendMessage(chatUser, imageUrl, Type.image);
   }
 }

@@ -33,6 +33,7 @@ class TheTextFeild extends StatelessWidget {
     required this.isborder,
     this.onClickColor,
     this.borderWidth,
+    this.onTap,
   });
 
   double bottomInsets = MediaQuery.of(Get.context!).viewInsets.bottom;
@@ -63,6 +64,7 @@ class TheTextFeild extends StatelessWidget {
   final bool isborder;
   final Color? onClickColor;
   final double? borderWidth;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,7 @@ class TheTextFeild extends StatelessWidget {
         showCursor: showCursor,
         controller: controller,
         validator: funValidate,
+        onTap: onTap,
         cursorColor: cursorColor ?? black,
         obscureText: obsecureText ?? false,
         keyboardType: textInputType ?? TextInputType.text,

@@ -6,8 +6,10 @@ class NetworkImages extends StatelessWidget {
   const NetworkImages({
     super.key,
     required this.url,
+    this.errorWidget,
   });
   final String url;
+  final Widget? errorWidget;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
@@ -19,7 +21,29 @@ class NetworkImages extends StatelessWidget {
           height: 80,
           width: 120,
           alignment: Alignment.center,
-          child: Image.asset('assets/images/nonDP.png')),
+          child: errorWidget ?? Image.asset('assets/images/nonDP.png')),
+    );
+  }
+}
+
+class NetworkImagesChat extends StatelessWidget {
+  const NetworkImagesChat({
+    super.key,
+    required this.url,
+    this.errorWidget,
+  });
+  final String url;
+  final Widget? errorWidget;
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: url,
+      fit: BoxFit.cover,
+      errorWidget: (context, url, error) => Container(
+          height: 80,
+          width: 120,
+          alignment: Alignment.center,
+          child: errorWidget ?? Image.asset('assets/images/nonDP.png')),
     );
   }
 }

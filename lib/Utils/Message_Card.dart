@@ -3,6 +3,7 @@ import 'package:me_chat/Controller/API/Apis.dart';
 import 'package:me_chat/Packages/CustomeTexts.dart';
 import 'package:me_chat/Utils/Constants.dart';
 import 'package:me_chat/Utils/MyDateUtils.dart';
+import 'package:me_chat/Utils/Widgets/Network_Image.dart';
 
 import '../Packages/Package_Export.dart';
 import '../models/MessageModel.dart';
@@ -31,8 +32,11 @@ class MessageCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                      padding: message.type == Type.text
+                          ? const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10)
+                          : const EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 0),
                       margin: const EdgeInsets.only(left: 30),
                       decoration: BoxDecoration(
                         color: appColor,
@@ -42,11 +46,21 @@ class MessageCard extends StatelessWidget {
                           bottomRight: Radius.circular(20),
                         ),
                       ),
-                      child: TextFW400(
-                        text: message.msg,
-                        fontSize: 16,
-                        textcolor: white,
-                      ),
+                      child: message.type == Type.text
+                          ? TextFW400(
+                              text: message.msg,
+                              fontSize: 16,
+                              textcolor: white,
+                            )
+                          : ClipRRect(
+                              // decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
+                              // ),
+                              child: NetworkImagesChat(url: message.msg)),
                     ),
                     sizeH(8),
                     Row(
@@ -92,8 +106,11 @@ class MessageCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                      padding: message.type == Type.text
+                          ? const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10)
+                          : const EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 0),
                       margin: const EdgeInsets.only(right: 30),
                       decoration: BoxDecoration(
                         color: white,
@@ -102,13 +119,25 @@ class MessageCard extends StatelessWidget {
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         ),
-                        border: Border.all(color: appColor, width: 2),
+                        border: message.type == Type.text
+                            ? Border.all(color: appColor, width: 2)
+                            : null,
                       ),
-                      child: TextFW400(
-                        text: message.msg,
-                        fontSize: 16,
-                        textcolor: appColor,
-                      ),
+                      child: message.type == Type.text
+                          ? TextFW400(
+                              text: message.msg,
+                              fontSize: 16,
+                              textcolor: appColor,
+                            )
+                          : ClipRRect(
+                              // decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
+                              // ),
+                              child: NetworkImagesChat(url: message.msg)),
                     ),
                     sizeH(8),
                     Row(

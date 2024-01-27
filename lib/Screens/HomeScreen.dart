@@ -124,16 +124,16 @@ class HomeScreen extends StatelessWidget {
                         return ListView.builder(
                             itemCount: list.length,
                             itemBuilder: (context, index) {
-                              if (index == list.length - 1) {
-                                return ChatUserCard(
-                                  onTap: () {
-                                    Nav.pushMaterial(
-                                        ChatScreen(user: list[index]));
-                                  },
-                                  isLast: true,
-                                  user: list[index],
-                                );
-                              }
+                              // if (index == list.length - 1) {
+                              //   return ChatUserCard(
+                              //     onTap: () {
+                              //       Nav.pushMaterial(
+                              //           ChatScreen(user: list[index]));
+                              //     },
+                              //     isLast: true,
+                              //     user: list[index],
+                              //   );
+                              // }
 
                               return ChatUserCard(
                                 onTap: () {
