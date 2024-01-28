@@ -17,6 +17,13 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     APIs.updateUserActiveStatus(true);
   }
 
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //   WidgetsBinding.instance.addObserver(this);
+  //   APIs.updateUserActiveStatus(true);
+  // }
+
   @override
   void onClose() {
     super.onClose();
@@ -37,18 +44,20 @@ class HomeController extends GetxController with WidgetsBindingObserver {
           APIs.updateUserActiveStatus(true);
           break;
         case AppLifecycleState.inactive:
+          break;
         case AppLifecycleState.paused:
+          print(">>>>Hello");
           // App is in the background or transitioning to the background
           // Add actions to handle when the app goes into the background
           APIs.updateUserActiveStatus(false);
           break;
         case AppLifecycleState.detached:
-        // App is terminated
-        // APIs.updateUserActiveStatus(false);
-        // break;
+          // App is terminated
+          // APIs.updateUserActiveStatus(false);
+          break;
         case AppLifecycleState.hidden:
-        // APIs.updateUserActiveStatus(false);
-        // break;
+          // APIs.updateUserActiveStatus(false);
+          break;
       }
     }
   }

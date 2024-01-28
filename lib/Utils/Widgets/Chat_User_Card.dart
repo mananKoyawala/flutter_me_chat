@@ -101,7 +101,7 @@ class ChatUserCard extends StatelessWidget {
                               : TextFW400(
                                   text: message != null
                                       ? MyDateUtils.getLastMessageTime(
-                                          time: message!.sent)
+                                          time: message!.sent, showYear: false)
                                       : '',
                                   fontSize: 14,
                                   textcolor:

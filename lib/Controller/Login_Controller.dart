@@ -20,11 +20,14 @@ class LoginController extends GetxController {
         // print("User >>>>>>>>>> : ${user.additionalUserInfo}");
         if ((await APIs.userAlreadyExist())) {
           Dialogs.removeProgressBar();
-          Nav.pushMaterialReplacement(HomeScreen());
+          await APIs.updateUserActiveStatus(true)
+              .then((value) => Nav.pushMaterialReplacement(HomeScreen()));
         } else {
           Dialogs.removeProgressBar();
-          await APIs.createUser()
-              .then((value) => Nav.pushMaterialReplacement(HomeScreen()));
+          await APIs.createUser().then((value) async {
+            await APIs.updateUserActiveStatus(true)
+                .then((value) => Nav.pushMaterialReplacement(HomeScreen()));
+          });
         }
       }
     });
@@ -54,10 +57,10 @@ class LoginController extends GetxController {
   }
 
   handleGoogleSignOut() async {
+    await APIs.updateUserActiveStatus(false);
     await APIs.auth.signOut();
-    await GoogleSignIn().signOut();
-    Nav.pop();
-    Nav.pop();
-    Nav.pushMaterialReplacement(LoginScreen());
+    await GoogleSignIn().signOut().then((value) =>
+        {Nav.pop(), Nav.pop(), Nav.pushMaterialReplacement(LoginScreen())});
+    // APIs.auth == FirebaseAuth.instance; if any error counter regarding logout plz uncommet this
   }
 }

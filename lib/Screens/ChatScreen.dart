@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:me_chat/Controller/ChatController.dart';
+import 'package:me_chat/Screens/ViewProfileScreen.dart';
 import 'package:me_chat/Utils/Constants.dart';
 import 'package:me_chat/Utils/Message_Card.dart';
 import 'package:me_chat/Utils/MyDateUtils.dart';
@@ -38,14 +39,25 @@ class ChatScreen extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: [
-                sizeH(10),
-                TopBar(user: user),
-                Container(
-                  height: 10,
-                  width: DP.infinity(),
-                  decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: textFeildColor, width: 1.5)),
+                ClickEffect(
+                  onTap: () {
+                    Nav.pushMaterial(ViewProfileScreen(user: user));
+                  },
+                  borderRadius: radius(0),
+                  child: Column(
+                    children: [
+                      sizeH(10),
+                      TopBar(user: user),
+                      Container(
+                        height: 10,
+                        width: DP.infinity(),
+                        decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: textFeildColor, width: 1.5)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 sizeH(20),

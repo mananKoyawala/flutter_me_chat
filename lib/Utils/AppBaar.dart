@@ -26,12 +26,14 @@ class CustomAppBar extends StatelessWidget {
     this.icon2,
     required this.title,
     this.icon1Color,
+    this.text,
   });
 
   final VoidCallback? onTap2;
   final Widget? icon2;
   final String title;
   final Color? icon1Color;
+  final Widget? text;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class CustomAppBar extends StatelessWidget {
               Nav.pop();
             },
             icon: Icon(Icons.arrow_back, color: icon1Color ?? black)),
-        TextFW600(text: title, fontSize: 20, textcolor: black),
+        text ?? TextFW600(text: title, fontSize: 20, textcolor: black),
         IconButtons(
             onTap: onTap2 ?? () {},
             icon: icon2 ?? Icon(Icons.arrow_back, color: white))

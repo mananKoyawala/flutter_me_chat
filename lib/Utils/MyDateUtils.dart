@@ -8,15 +8,29 @@ class MyDateUtils {
   }
 
   //get last message time
-  static String getLastMessageTime({required String time}) {
+  static String getLastMessageTime(
+      {required String time, required bool showYear}) {
     final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
     final DateTime now = DateTime.now();
+    DateTime yesterday = now.subtract(const Duration(days: 1));
     if (now.day == sent.day &&
         now.month == sent.month &&
         now.year == sent.year) {
-      return TimeOfDay.fromDateTime(sent).format(ncontext);
+      return showYear
+          ? 'Today at ${TimeOfDay.fromDateTime(sent).format(ncontext)}'
+          : TimeOfDay.fromDateTime(sent).format(ncontext);
     }
-    return '${sent.day} ${getMonth(sent)}';
+
+    if (yesterday.day == sent.day &&
+        yesterday.month == sent.month &&
+        yesterday.year == sent.year) {
+      return showYear
+          ? 'Yesterday at ${TimeOfDay.fromDateTime(sent).format(ncontext)}'
+          : TimeOfDay.fromDateTime(sent).format(ncontext);
+    }
+    return showYear
+        ? '${sent.day} ${getMonth(sent)} ${sent.year}'
+        : '${sent.day} ${getMonth(sent)}';
   }
 
   //get formatted last active time of user in chat screen

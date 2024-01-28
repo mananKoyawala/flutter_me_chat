@@ -36,7 +36,7 @@ class APIs {
 
   // for creating new user
   static Future<void> createUser() async {
-    final time = DateTime.now().microsecondsSinceEpoch.toString();
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
     final chatUser = ChatUser(
         image: user.photoURL!,
         name: user.displayName!,
