@@ -6,9 +6,11 @@ import 'package:me_chat/Controller/API/Apis.dart';
 import 'package:me_chat/Packages/Package_Export.dart';
 import 'package:me_chat/Utils/Constants.dart';
 import 'package:me_chat/Utils/MyDateUtils.dart';
+import 'package:me_chat/Utils/Widgets/Dialogs/Profile_Dialog.dart';
 import 'package:me_chat/models/MessageModel.dart';
 
 import '../../models/ChatUserModel.dart';
+import '../Services/NavigatorServices.dart';
 import 'Network_Image.dart';
 
 class ChatUserCard extends StatelessWidget {
@@ -25,6 +27,11 @@ class ChatUserCard extends StatelessWidget {
   final VoidCallback onTap;
 
   Message? message;
+
+  Future<dynamic> showProfile() {
+    return showDialog(
+        context: ncontext, builder: (ctx) => ProfileDialog(user: user));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +63,21 @@ class ChatUserCard extends StatelessWidget {
                 }
                 return Row(
                   children: [
-                    ClipRRect(
+                    ClickEffect(
+                      onTap: () {
+                        showProfile();
+                      },
                       borderRadius: radius(imageHeight),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: imageBg,
-                              borderRadius: radius(imageHeight)),
-                          height: imageHeight,
-                          width: imageHeight,
-                          child: NetworkImages(url: user.image)),
+                      child: ClipRRect(
+                        borderRadius: radius(imageHeight),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: imageBg,
+                                borderRadius: radius(imageHeight)),
+                            height: imageHeight,
+                            width: imageHeight,
+                            child: NetworkImages(url: user.image)),
+                      ),
                     ),
                     sizeW(15),
                     Expanded(

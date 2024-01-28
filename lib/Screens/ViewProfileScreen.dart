@@ -25,8 +25,15 @@ class ViewProfileScreen extends StatelessWidget {
             children: [
               CustomAppBar(
                 title: user.name,
-                text:
-                    FittedBox(child: TextFW400(text: user.name, fontSize: 25)),
+                text: SizedBox(
+                  width: DP.width(.25),
+                  child: TextFW400(
+                      text: user.name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      fontSize: 22),
+                ),
               ),
               sizeH10(),
               CP(
