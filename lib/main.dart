@@ -9,7 +9,9 @@ import 'package:me_chat/Utils/Services/NavigatorServices.dart';
 import 'Controller/Login_Controller.dart';
 import 'Packages/Constants.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+import 'package:flutter_notification_channel/notification_importance.dart';
+import 'package:flutter_notification_channel/notification_visibility.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -25,6 +27,17 @@ initializeFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FlutterNotificationChannel.registerNotificationChannel(
+      description: 'For showing message notifications',
+      id: 'chats',
+      importance: NotificationImportance.IMPORTANCE_HIGH,
+      name: 'Chats',
+      enableSound: true,
+      allowBubbles: true,
+      showBadge: true,
+      enableVibration: true,
+      visibility: NotificationVisibility.VISIBILITY_PUBLIC);
 }
 
 class MyApp extends StatelessWidget {

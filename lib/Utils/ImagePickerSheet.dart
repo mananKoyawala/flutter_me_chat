@@ -30,11 +30,11 @@ class ImagePickerSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              NewWidget(
+              ImageWidget(
                 onTap: onImage,
                 image: 'assets/icons/image.png',
               ),
-              NewWidget(
+              ImageWidget(
                 onTap: onCamera,
                 image: 'assets/icons/camera.png',
               ),
@@ -46,8 +46,8 @@ class ImagePickerSheet extends StatelessWidget {
   }
 }
 
-class NewWidget extends StatelessWidget {
-  const NewWidget({
+class ImageWidget extends StatelessWidget {
+  const ImageWidget({
     super.key,
     required this.onTap,
     required this.image,

@@ -133,7 +133,8 @@ class TextFW400 extends StatelessWidget {
       this.fontFamily,
       this.decoration,
       this.overflow,
-      this.maxLines});
+      this.maxLines,
+      this.letterSpacing});
   final String text;
   final Color? textcolor;
   final FontWeight? fontWeight;
@@ -144,6 +145,7 @@ class TextFW400 extends StatelessWidget {
   final TextDecoration? decoration;
   final TextOverflow? overflow;
   final int? maxLines;
+  final double? letterSpacing;
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +159,7 @@ class TextFW400 extends StatelessWidget {
           fontSize: fontSize,
           fontWeight: fontWeight ?? FontWeight.w400,
           color: textcolor ?? Colors.black,
+          letterSpacing: letterSpacing,
           decoration: decoration),
     );
   }

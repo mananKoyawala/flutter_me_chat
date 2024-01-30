@@ -27,6 +27,7 @@ class ChatScreen extends StatelessWidget {
       onWillPop: () {
         if (ctr.showEmoji.value == true) {
           ctr.showEmoji.value = false;
+          return Future.value(false);
         }
         ctr.chatTextCtr.clear();
         return Future.value(true);

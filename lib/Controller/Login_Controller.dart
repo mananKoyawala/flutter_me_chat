@@ -19,14 +19,20 @@ class LoginController extends GetxController {
         // print("User >>>>>>>>>> : ${user.user}");
         // print("User >>>>>>>>>> : ${user.additionalUserInfo}");
         if ((await APIs.userAlreadyExist())) {
+          await APIs.currentUserInfo();
           Dialogs.removeProgressBar();
-          await APIs.updateUserActiveStatus(true)
-              .then((value) => Nav.pushMaterialReplacement(HomeScreen()));
+          await APIs.updateUserActiveStatus(true).then((value) async {
+            await APIs.getFirebaseMessagingToken();
+            Nav.pushMaterialReplacement(HomeScreen());
+          });
         } else {
           Dialogs.removeProgressBar();
           await APIs.createUser().then((value) async {
-            await APIs.updateUserActiveStatus(true)
-                .then((value) => Nav.pushMaterialReplacement(HomeScreen()));
+            await APIs.currentUserInfo();
+            await APIs.updateUserActiveStatus(true).then((value) async {
+              await APIs.getFirebaseMessagingToken();
+              Nav.pushMaterialReplacement(HomeScreen());
+            });
           });
         }
       }

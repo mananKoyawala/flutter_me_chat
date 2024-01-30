@@ -17,12 +17,11 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     APIs.updateUserActiveStatus(true);
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  //   WidgetsBinding.instance.addObserver(this);
-  //   APIs.updateUserActiveStatus(true);
-  // }
+  @override
+  void onReady() {
+    super.onReady();
+    APIs.getFirebaseMessagingToken();
+  }
 
   @override
   void onClose() {

@@ -1,16 +1,22 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart';
+
 import 'package:me_chat/Packages/Constants.dart';
 import 'package:me_chat/models/ChatUserModel.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:me_chat/models/MessageModel.dart';
 
 class APIs {
   static FirebaseAuth auth = FirebaseAuth.instance;
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
   static FirebaseStorage storage = FirebaseStorage.instance;
+  static FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   // Get current user
   static User get user => auth.currentUser!;
@@ -105,6 +111,13 @@ class APIs {
     });
   }
 
+  // Update Current user Push Token
+  static Future<void> updateUserPushToken() async {
+    firestore.collection('users').doc(user.uid).update({
+      'push_token': meUser.pushToken,
+    });
+  }
+
   //********************************* Chat Screen Related APIS *********************************/
 
   // chats (collection) --> conversation_id (docs) --> messages (collection) --> messages (doc)
@@ -137,13 +150,18 @@ class APIs {
         read: '',
         type: type,
         sent: time);
-
+    // toast('1');
     final ref = firestore
         .collection('chats/${getConversationID(chatUser.id)}/messages/');
-    await ref.doc(time).set(message.toJson());
+    // toast('2');
+
+    await ref.doc(time).set(message.toJson()).then((value) =>
+        sendPushNotification(chatUser, type == Type.text ? msg : 'image'));
+    // toast('3');
   }
 
   // update message read status
+  // when particular message is load check if read is empty if empty then added timestamp of read status
   static Future<void> updateMessageReadStatus(Message message) async {
     firestore
         .collection('chats/${getConversationID(message.fromId)}/messages/')
@@ -176,5 +194,78 @@ class APIs {
     // # Update image url in firestore
     final imageUrl = await ref.getDownloadURL();
     await APIs.sendMessage(chatUser, imageUrl, Type.image);
+  }
+
+  // Edit Message
+  static Future<void> editMessage(Message message, String msg) async {
+    await firestore
+        .collection('chats/${getConversationID(message.toId)}/messages/')
+        .doc(message.sent)
+        .update({'msg': msg}).then((value) => toast('Message updated.'));
+  }
+
+  //Delete Message
+  static Future<void> deleteMessage(Message message) async {
+    await firestore
+        .collection('chats/${getConversationID(message.toId)}/messages/')
+        .doc(message.sent)
+        .delete();
+
+    if (message.type == Type.image) {
+      await storage.refFromURL(message.msg).delete();
+    }
+  }
+
+  //********************************* Firebase Messaging Stuff *********************************/
+
+  // Get Firebase Messaging token
+  static Future<void> getFirebaseMessagingToken() async {
+    await messaging.requestPermission();
+    await messaging.getToken().then((value) {
+      if (value != null) {
+        meUser.pushToken = value;
+        print(">>>>>>>> ${meUser.pushToken}");
+        updateUserPushToken();
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      log('Got the message');
+      log('>>Message : ${message.data}');
+
+      if (message.notification != null) {
+        log('message also contains the notification');
+      }
+    });
+  }
+
+  // Sending the push notification
+  static Future<void> sendPushNotification(
+      ChatUser chatUser, String msg) async {
+    try {
+      final body = {
+        "to": chatUser.pushToken,
+        "notification": {
+          "title": chatUser.name,
+          "body": msg,
+          "android_channel_id": "chats"
+        },
+        "data": {
+          "some_data": "abc",
+        },
+      };
+
+      await post(
+        Uri.parse("https://fcm.googleapis.com/fcm/send"),
+        body: jsonEncode(body),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader:
+              'key=AAAAOjOhALg:APA91bFGP-Va_K21PDYH7h103IuegxNOCzApgZJwe3MzadXliKpCvIzWUdReFbLPzZt-FkyTDEkDEQif53IVEvEQiVa0vPxX-w_Zdb6DzW05p6gj0Cswe0p5-czHAH3nvQ542T_nlBA5'
+        },
+      );
+    } catch (e) {
+      print('>>> Error Occured : $e');
+    }
   }
 }

@@ -13,7 +13,8 @@ class ChatController extends GetxController {
   var showEmoji = false.obs;
   final localImage = "".obs;
   var isUploading = false.obs;
-
+  final chatEditCtr = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   changeShowEmoji() {
     showEmoji.toggle();
   }
@@ -45,5 +46,9 @@ class ChatController extends GetxController {
       // toast(image.path);
       await APIs.sendChatImage(user, File(image.path));
     }
+  }
+
+  changeChatEditingController(String val) {
+    chatEditCtr.text = val;
   }
 }
