@@ -241,7 +241,7 @@ class MessageCard extends StatelessWidget {
           OptionItem(
               icon: Icons.remove_red_eye,
               title: message.read.isNotEmpty
-                  ? "Read At ${MyDateUtils.getMessageTime(time: message.sent)}"
+                  ? "Read At ${MyDateUtils.getMessageTime(time: message.read)}"
                   : "Not Seen Yet",
               onTap: () {},
               color: appColor),
