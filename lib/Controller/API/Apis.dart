@@ -29,6 +29,31 @@ class APIs {
     return (await firestore.collection('users').doc(user.uid).get()).exists;
   }
 
+  // For Adding an Chat User for our conversation
+  static Future<bool> addChatUser(String email) async {
+    final data = await firestore
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+
+    log('>> Data : $data');
+
+    if (data.docs.isNotEmpty && data.docs.first.id != user.uid) {
+      log('>> User Exist ${data.docs.first.data()}');
+
+      // User exist
+      firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('my_users')
+          .doc(data.docs.first.id);
+      return true;
+    } else {
+      // User Doesn't Exist
+      return false;
+    }
+  }
+
   // Getting current user info
   static Future<void> currentUserInfo() async {
     await firestore.collection('users').doc(user.uid).get().then((user) async {
@@ -60,11 +85,35 @@ class APIs {
   }
 
   // get all users from database
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers() {
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers(
+      List<String> userids) {
+    log("Users $userids");
     return APIs.firestore
         .collection('users')
-        .where('id', isNotEqualTo: user.uid)
+        .where('id', whereIn: userids.isEmpty ? [''] : userids)
         .snapshots();
+  }
+
+  // Get id's of users that i know
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getMyUsersId() {
+    return APIs.firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('my_users')
+        .snapshots();
+  }
+
+  static Future<void> sendFirstMessage(
+      // This code for when i add a user's email that i know and send the first message but he didn't add me so this code add me to there my_users list
+      ChatUser chatUser,
+      String msg,
+      Type type) async {
+    await firestore
+        .collection('users')
+        .doc(chatUser.id)
+        .collection('my_users')
+        .doc(user.uid)
+        .set({}).then((value) => sendMessage(chatUser, msg, type));
   }
 
   // Update user ingo

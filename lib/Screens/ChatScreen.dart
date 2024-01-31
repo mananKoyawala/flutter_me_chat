@@ -119,6 +119,7 @@ class ChatScreen extends StatelessWidget {
                   controller: ctr.chatTextCtr,
                   user: user,
                   ctr: ctr,
+                  list: list,
                 ),
                 Obx(
                   () => ctr.showEmoji.value
@@ -158,10 +159,12 @@ class BottomContainer extends StatelessWidget {
     required this.controller,
     required this.user,
     required this.ctr,
+    required this.list,
   });
   final TextEditingController controller;
   final ChatUser user;
   final ChatController ctr;
+  final List<Message> list;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -244,8 +247,15 @@ class BottomContainer extends StatelessWidget {
             child: ClickEffect(
               onTap: () {
                 if (controller.text != "") {
-                  APIs.sendMessage(user, controller.text, Type.text);
-                  controller.clear();
+                  if (list.isEmpty) {
+                    // Send First Message
+                    APIs.sendFirstMessage(user, controller.text, Type.text);
+                    controller.clear();
+                  } else {
+                    // Send regular Message
+                    APIs.sendMessage(user, controller.text, Type.text);
+                    controller.clear();
+                  }
                 }
               },
               rippleColor: black,

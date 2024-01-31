@@ -5,6 +5,8 @@ import 'package:me_chat/Controller/API/Apis.dart';
 class HomeController extends GetxController with WidgetsBindingObserver {
   var isSearching = false.obs;
   final searchCtr = TextEditingController();
+  final addUserCtr = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   changeIsSearching() {
     isSearching.toggle();
