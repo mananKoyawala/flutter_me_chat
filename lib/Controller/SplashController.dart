@@ -22,6 +22,7 @@ class SplashController extends GetxController {
         systemNavigationBarColor: Colors.transparent));
 
     if (APIs.auth.currentUser != null) {
+      await APIs.currentUserInfo();
       Nav.pushMaterialReplacement(HomeScreen());
       return;
     }
