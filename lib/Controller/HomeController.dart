@@ -47,7 +47,7 @@ class HomeController extends GetxController with WidgetsBindingObserver {
         case AppLifecycleState.inactive:
           break;
         case AppLifecycleState.paused:
-          print(">>>>Hello");
+          // print(">>>>Hello");
           // App is in the background or transitioning to the background
           // Add actions to handle when the app goes into the background
           APIs.updateUserActiveStatus(false);

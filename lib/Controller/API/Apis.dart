@@ -273,7 +273,7 @@ class APIs {
     await messaging.getToken().then((value) {
       if (value != null) {
         meUser.pushToken = value;
-        print(">>>>>>>> ${meUser.pushToken}");
+        // print(">>>>>>>> ${meUser.pushToken}");
         updateUserPushToken();
       }
     });
@@ -314,7 +314,7 @@ class APIs {
         },
       );
     } catch (e) {
-      print('>>> Error Occured : $e');
+      // print('>>> Error Occured : $e');
     }
   }
 }

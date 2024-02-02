@@ -7,6 +7,7 @@ import 'package:me_chat/Controller/SplashController.dart';
 import 'package:me_chat/Screens/SplashScreen.dart';
 import 'package:me_chat/Utils/Services/NavigatorServices.dart';
 import 'Controller/Login_Controller.dart';
+import 'Controller/Network/Dependency_Injection.dart';
 import 'Packages/Constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_notification_channel/flutter_notification_channel.dart';
@@ -24,7 +25,8 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => {initializeFirebase(), runApp(MyApp())});
+  ]).then((value) =>
+      {DependencyInjection.init(), initializeFirebase(), runApp(MyApp())});
 }
 
 initializeFirebase() async {

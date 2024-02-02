@@ -37,6 +37,8 @@ dev_dependencies:
   flutter_notification_channel: ^2.0.0
   gallery_saver_updated: ^3.0.0
   flutter_native_splash: ^2.3.10
+  connectivity_plus: ^5.0.2
+  internet_connection_checker: ^1.0.0+1
 
 flutter_launcher_icons:
   android: 'launcher_icon'
